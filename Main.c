@@ -32,6 +32,7 @@ int main(){
             int index;
             scanf("%d", &index);
             StrList_printAt(list,index);
+            printf("\n");
         }else if(num==6){
             printf("%d", StrList_printLen(list));
             printf("\n");
