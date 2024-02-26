@@ -15,10 +15,10 @@ struct _StrList {
 
 Node* Node_alloc(const char* str, Node* next) {
     Node* p = (Node*)malloc(sizeof(Node));
-    if (p == NULL) { 
+    if (p == NULL) {
         return NULL;
     }
-    p->_str = strdup(str); 
+    p->_str = strdup(str);
     if (p->_str == NULL) { 
         free(p);
         return NULL;
@@ -135,7 +135,7 @@ int StrList_printLen(const StrList* StrList) {
 }
 
 int StrList_count(StrList* StrList, const char* data) {
-    if (StrList == NULL || data == NULL) return 0;
+    if (StrList == NULL || StrList->_head == NULL || data == NULL) return 0;
     Node* p = StrList->_head;
     size_t num = 0;
     while (p) {
@@ -203,7 +203,7 @@ int StrList_isEqual(const StrList* StrList1, const StrList* StrList2) {
 }
 
 StrList* StrList_clone(const StrList* StrList1) {
-    if (StrList1 == NULL) return NULL;
+    if (StrList1 == NULL || StrList1->_head == NULL) return NULL;
     StrList* NewList = StrList_alloc();
     if (NewList == NULL) return NULL;
     Node* p = StrList1->_head;

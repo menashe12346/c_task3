@@ -3,6 +3,35 @@
 #include <stdlib.h>
 #include "StrList.h"
 
+char *inputString(FILE* fp, size_t size){
+//The size is extended by the input with the value of the provisional
+    char *str;
+    int ch;
+    size_t len = 0;
+    str = realloc(NULL, sizeof(*str)*size);//size is start size
+    if(!str)return str;
+    while(EOF!=(ch=fgetc(fp)) && ch != '\n'){
+        str[len++]=ch;
+        if(len==size){
+            str = realloc(str, sizeof(*str)*(size+=16));
+            if(!str)return str;
+        }
+    }
+    str[len++]='\0';
+
+    return realloc(str, sizeof(*str)*len);
+}
+
+void insertWordsToList(StrList* list, char* input, int numWords) {
+    char* token = strtok(input, " ");
+    int count = 0;
+    while (token != NULL && count < numWords) {
+        StrList_insertLast(list, token);
+        token = strtok(NULL, " ");
+        count++;
+    }
+}
+
 int main(){
     StrList* list = StrList_alloc();
     int num;
@@ -11,16 +40,12 @@ int main(){
         if (num == 1) {
         int numOfWords;
         scanf("%d", &numOfWords);
-        for (int i = 0; i < numOfWords; i++) {
-            char *str = (char *)malloc(sizeof(char)*100);
-            scanf("%s", str);
-            StrList_insertLast(list, str);
-        }
+        char* str = inputString(stdin, 100);
+        insertWordsToList(list, str, numOfWords);
         } else if(num==2){
             int index;
             scanf("%d", &index);
-            char str[100];
-            scanf("%s", str);
+            char* str = inputString(stdin, 100);
             StrList_insertAt(list, str, index);
         } else if(num==3){
             StrList_print(list);
@@ -37,13 +62,11 @@ int main(){
             printf("%d", StrList_printLen(list));
             printf("\n");
         } else if(num==7){
-            char str[100];
-            scanf("%s", str);
+            char* str = inputString(stdin, 100);
             printf("%d",StrList_count(list, str));
             printf("\n");
         } else if(num==8){
-            char str[100];
-            scanf("%s", str);
+            char* str = inputString(stdin, 100);
             StrList_remove(list, str);
         } else if(num==9){
             int index;
