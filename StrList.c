@@ -100,7 +100,7 @@ char* StrList_firstData(const StrList* StrList) {
 }
 
 void StrList_print(const StrList* StrList) {
-    if (StrList == NULL || StrList->_head == NULL) return;
+    if (StrList == NULL || StrList->_head == NULL) printf("\n");
     Node* p = StrList->_head;
     int isFirst=1;
     while (p) {
